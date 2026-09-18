@@ -1,0 +1,1472 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Langkah — tetapkan tujuan, bangun sistem tindakan, dan pantau progresmu.">
+<meta name="theme-color" content="#F7F3EF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#201E1D" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Langkah">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%234A6663'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23F7F3EF' stroke-width='7'/%3E%3Ccircle cx='50' cy='50' r='12' fill='%23F7F3EF'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234A6663'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23F7F3EF' stroke-width='7'/%3E%3Ccircle cx='50' cy='50' r='12' fill='%23F7F3EF'/%3E%3C/svg%3E">
+<title>Langkah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  html{ -webkit-text-size-adjust:100%; }
+  :root{
+    color-scheme: light;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg:#F7F3EF;
+    --text:#2C2B2A;
+    --muted:#6E6A64;
+    --primary:#4A6663;
+    --primary-strong:#3C5451;
+    --secondary:#9BB5B0;
+    --linen:#C9BEB7;
+    --linen-soft:#EFE9E3;
+    --card:#FFFFFF;
+    --card-border:#E7DFD7;
+    --divider:#E3DBD2;
+    --track:#E7E0D8;
+    --shadow:0 1px 2px rgba(44,43,42,.05), 0 6px 18px rgba(44,43,42,.05);
+    --ok:#4A6663;
+    --ok-bg:#E4EBE9;
+    --warn:#9A6B2F;
+    --warn-bg:#F3E7D6;
+    --plan:#9A4A44;
+    --plan-bg:#F1E0DE;
+    --focus-ring:#4A6663;
+    --r:18px;
+    --r-sm:12px;
+    --nav-h:66px;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      color-scheme: dark;
+      --bg:#201E1D;
+      --text:#F2ECE6;
+      --muted:#ABA49B;
+      --primary:#8FB0AB;
+      --primary-strong:#A6C2BD;
+      --secondary:#6E8C87;
+      --linen:#4B443E;
+      --linen-soft:#2C2926;
+      --card:#2A2725;
+      --card-border:#3A3633;
+      --divider:#3A3633;
+      --track:#3A3633;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.28);
+      --ok:#8FB0AB;
+      --ok-bg:#2C3836;
+      --warn:#D6A868;
+      --warn-bg:#3A3226;
+      --plan:#D98E88;
+      --plan-bg:#3A2A28;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#201E1D;
+    --text:#F2ECE6;
+    --muted:#ABA49B;
+    --primary:#8FB0AB;
+    --primary-strong:#A6C2BD;
+    --secondary:#6E8C87;
+    --linen:#4B443E;
+    --linen-soft:#2C2926;
+    --card:#2A2725;
+    --card-border:#3A3633;
+    --divider:#3A3633;
+    --track:#3A3633;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.28);
+    --ok:#8FB0AB;
+    --ok-bg:#2C3836;
+    --warn:#D6A868;
+    --warn-bg:#3A3226;
+    --plan:#D98E88;
+    --plan-bg:#3A2A28;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    -webkit-tap-highlight-color:transparent;
+    overflow-x:hidden;
+    min-height:100vh;
+    min-height:100dvh;
+  }
+  button{font-family:inherit;color:inherit;cursor:pointer;}
+  input,textarea,select{font-family:inherit;font-size:16px;color:var(--text);}
+  h1,h2,h3,p{margin:0;overflow-wrap:break-word;}
+  :focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:6px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    z-index:40;
+    background:color-mix(in srgb,var(--bg) 88%, transparent);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid var(--divider);
+  }
+  .topbar-inner{
+    max-width:720px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:12px 16px;
+  }
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:19px;letter-spacing:-.01em;color:var(--primary);}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 4px var(--ok-bg);}
+  .topnav{display:none;}
+  .icon-btn{
+    width:44px;height:44px;flex:0 0 auto;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:transparent;border:none;border-radius:12px;color:var(--muted);
+  }
+  .icon-btn:hover{background:var(--linen-soft);color:var(--text);}
+
+  /* ---------- Layout ---------- */
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px;}
+  main{padding-top:16px;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 28px);}
+  .stack{display:flex;flex-direction:column;}
+  .g8{gap:8px;} .g12{gap:12px;} .g16{gap:16px;} .g24{gap:24px;}
+
+  .page-title{font-size:26px;font-weight:700;letter-spacing:-.02em;text-wrap:balance;line-height:1.25;}
+  .page-sub{color:var(--muted);font-size:14px;}
+  .eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+  .section-label{font-size:14px;font-weight:600;color:var(--muted);}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--card);border:1px solid var(--card-border);border-radius:var(--r);
+    box-shadow:var(--shadow);
+  }
+  .card.pad{padding:16px;}
+  .identity{
+    background:var(--ok-bg);border:1px solid transparent;border-radius:var(--r);padding:14px 16px;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .identity .q{color:var(--primary);flex:0 0 auto;margin-top:1px;}
+  .identity .t{font-size:15.5px;font-weight:500;line-height:1.45;}
+  .identity .lbl{font-size:12px;color:var(--primary-strong);font-weight:600;margin-bottom:2px;}
+  .link-btn{background:none;border:none;color:var(--primary);font-weight:600;padding:0;font-size:14px;text-decoration:underline;text-underline-offset:3px;}
+
+  /* action row */
+  .action{overflow:hidden;}
+  .action-main{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;}
+  .check{
+    flex:0 0 auto;width:44px;height:44px;margin-top:-6px;border-radius:13px;
+    border:2px solid var(--secondary);background:var(--card);
+    display:inline-flex;align-items:center;justify-content:center;padding:0;color:#fff;
+    transition:background .16s,border-color .16s,transform .16s;
+  }
+  .check .tick{opacity:0;transform:scale(.5);transition:opacity .16s,transform .16s;}
+  .check[aria-checked="true"]{background:var(--primary);border-color:var(--primary);}
+  .check[aria-checked="true"] .tick{opacity:1;transform:scale(1);}
+  .check.partial{border-color:var(--primary);background:var(--ok-bg);}
+  .action-tap{flex:1 1 auto;min-width:0;background:none;border:none;text-align:left;padding:0;display:block;}
+  .action-name{font-size:16px;font-weight:600;line-height:1.35;}
+  .action.done .action-name{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--secondary);}
+  .action-goal{font-size:13px;color:var(--muted);margin-top:2px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;}
+  .chip-focus{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;color:var(--primary-strong);background:var(--ok-bg);padding:2px 8px;border-radius:999px;}
+  .expand-btn{flex:0 0 auto;width:34px;height:34px;border-radius:9px;border:none;background:transparent;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;margin-top:-2px;}
+  .expand-btn svg{transition:transform .18s;}
+  .action.open .expand-btn svg{transform:rotate(180deg);}
+
+  .counter{display:flex;align-items:center;gap:10px;margin:8px 0 2px 56px;}
+  .step{width:38px;height:38px;border-radius:10px;border:1px solid var(--card-border);background:var(--linen-soft);font-size:20px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;color:var(--primary);}
+  .step:disabled{opacity:.4;}
+  .count-val{font-size:14px;font-weight:600;min-width:74px;text-align:center;font-variant-numeric:tabular-nums;}
+
+  .action-extra{padding:0 16px 16px 56px;display:flex;flex-direction:column;gap:12px;}
+  .extra-block .k{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:3px;}
+  .extra-block .v{font-size:14.5px;line-height:1.5;background:var(--linen-soft);border-radius:12px;padding:10px 12px;}
+  .btn-ghost{align-self:flex-start;background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:9px 14px;font-size:14px;font-weight:600;color:var(--primary);min-height:40px;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--primary);color:#fff;border:none;border-radius:14px;
+    padding:14px 18px;font-size:16px;font-weight:600;min-height:52px;width:100%;
+    transition:transform .12s,background .16s;
+  }
+  .btn:hover{background:var(--primary-strong);}
+  .btn:active{transform:scale(.985);}
+  .btn.secondary{background:var(--card);color:var(--primary);border:1px solid var(--card-border);}
+  .btn.secondary:hover{background:var(--linen-soft);}
+  .btn.danger{background:var(--plan-bg);color:var(--plan);}
+  .btn.danger:hover{background:var(--plan-bg);filter:brightness(.97);}
+  .btn.small{min-height:44px;padding:10px 16px;font-size:15px;width:auto;}
+  .btn[disabled]{opacity:.5;pointer-events:none;}
+
+  /* ---------- Goal card ---------- */
+  .goal-card{padding:16px;display:flex;flex-direction:column;gap:12px;}
+  .goal-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+  .goal-name{font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.3;text-wrap:balance;}
+  .goal-meta{font-size:13px;color:var(--muted);margin-top:3px;}
+  .status-pill{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;white-space:nowrap;}
+  .status-pill.ok{background:var(--ok-bg);color:var(--ok);}
+  .status-pill.warn{background:var(--warn-bg);color:var(--warn);}
+  .status-pill.plan{background:var(--plan-bg);color:var(--plan);}
+  .status-pill.none{background:var(--linen-soft);color:var(--muted);}
+
+  .metric-label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;margin-bottom:6px;}
+  .metric-label .name{font-weight:600;color:var(--text);}
+  .metric-label .val{color:var(--muted);font-variant-numeric:tabular-nums;}
+  .bar{height:9px;border-radius:999px;background:var(--track);overflow:hidden;}
+  .bar > span{display:block;height:100%;border-radius:999px;background:var(--primary);transition:width .35s ease;}
+  .bar.sec > span{background:var(--secondary);}
+  .metric + .metric{margin-top:12px;}
+  .sys-summary{font-size:13.5px;color:var(--muted);line-height:1.5;border-top:1px solid var(--divider);padding-top:10px;}
+  .sys-summary b{color:var(--text);font-weight:600;}
+
+  /* ---------- Empty / notice ---------- */
+  .empty{text-align:center;padding:34px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+  .empty .art{width:58px;height:58px;border-radius:18px;background:var(--ok-bg);color:var(--primary);display:flex;align-items:center;justify-content:center;}
+  .empty h3{font-size:18px;font-weight:700;}
+  .empty p{color:var(--muted);font-size:14.5px;max-width:34ch;}
+  .notice{display:flex;gap:12px;align-items:flex-start;background:var(--warn-bg);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.45;color:var(--text);}
+  .notice .ic{color:var(--warn);flex:0 0 auto;margin-top:1px;}
+  .done-banner{display:flex;gap:12px;align-items:center;background:var(--ok-bg);border-radius:14px;padding:14px 16px;color:var(--primary-strong);font-weight:500;}
+
+  /* ---------- Bottom nav ---------- */
+  .tabbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:45;
+    background:var(--card);border-top:1px solid var(--divider);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .tabbar-inner{max-width:720px;margin:0 auto;display:flex;}
+  .tab{
+    flex:1 1 0;background:none;border:none;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    padding:9px 4px;min-height:var(--nav-h);color:var(--muted);font-size:11.5px;font-weight:600;
+  }
+  .tab .tabic{display:flex;align-items:center;justify-content:center;width:52px;height:30px;border-radius:999px;transition:background .16s;}
+  .tab[aria-current="page"]{color:var(--primary);}
+  .tab[aria-current="page"] .tabic{background:var(--ok-bg);}
+
+  /* ---------- Overlays (full page) ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:60;background:var(--bg);
+    display:flex;flex-direction:column;
+    padding-top:env(safe-area-inset-top,0px);
+  }
+  .ov-head{
+    display:flex;align-items:center;gap:8px;padding:12px 12px;
+    border-bottom:1px solid var(--divider);flex:0 0 auto;
+  }
+  .ov-head .ov-title{font-size:17px;font-weight:700;flex:1 1 auto;min-width:0;text-align:center;padding:0 4px;}
+  .ov-head .icon-btn{color:var(--text);}
+  .ov-body{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .ov-body .wrap{padding-top:18px;padding-bottom:120px;}
+  .ov-foot{
+    flex:0 0 auto;border-top:1px solid var(--divider);background:var(--card);
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+  }
+  .ov-foot .wrap{padding:0;max-width:720px;display:flex;gap:10px;}
+  .ov-foot .btn{flex:1 1 auto;}
+
+  /* ---------- Forms ---------- */
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+  .field > label{font-size:14px;font-weight:600;}
+  .field .hint{font-size:13px;color:var(--muted);}
+  .input,textarea.input,select.input{
+    width:100%;background:var(--card);border:1px solid var(--card-border);border-radius:12px;
+    padding:13px 14px;font-size:16px;color:var(--text);min-height:50px;
+  }
+  textarea.input{min-height:84px;resize:vertical;line-height:1.5;}
+  .input::placeholder,textarea.input::placeholder{color:#A9A29A;}
+  .input:focus,textarea.input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--ok-bg);}
+  .err{color:var(--plan);font-size:13px;font-weight:500;}
+  .field.invalid .input,.field.invalid textarea.input{border-color:var(--plan);}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    border:1px solid var(--card-border);background:var(--card);border-radius:999px;
+    padding:0 4px;min-height:44px;min-width:52px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:600;color:var(--muted);padding-inline:16px;
+  }
+  .chip[aria-pressed="true"]{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+  .seg{display:flex;gap:8px;background:var(--linen-soft);padding:5px;border-radius:14px;}
+  .seg button{flex:1 1 0;border:none;background:transparent;border-radius:10px;padding:11px 8px;font-size:14.5px;font-weight:600;color:var(--muted);min-height:46px;}
+  .seg button[aria-pressed="true"]{background:var(--card);color:var(--primary);box-shadow:var(--shadow);}
+
+  .step-dots{display:flex;align-items:center;gap:6px;justify-content:center;}
+  .step-dots .d{height:6px;border-radius:999px;background:var(--track);width:22px;transition:background .2s,width .2s;}
+  .step-dots .d.on{background:var(--primary);width:30px;}
+  .wiz-count{text-align:center;font-size:13px;color:var(--muted);font-weight:600;margin-top:8px;}
+
+  .sys-editor{border:1px solid var(--card-border);border-radius:14px;padding:14px;margin-bottom:12px;background:var(--card);}
+  .sys-editor .se-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .sys-editor .se-head .t{font-size:13px;font-weight:700;color:var(--muted);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:360px){.grid2{grid-template-columns:1fr;}}
+
+  .ms-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+  .ms-row .input{flex:1 1 auto;}
+  .ms-del{flex:0 0 auto;width:44px;height:44px;border-radius:10px;border:1px solid var(--card-border);background:var(--card);color:var(--plan);display:inline-flex;align-items:center;justify-content:center;}
+
+  /* review */
+  .rev-goal{padding:16px;display:flex;flex-direction:column;gap:14px;}
+  .rev-metrics{display:flex;flex-direction:column;gap:12px;}
+  .q-block label{font-size:14px;font-weight:600;display:block;margin-bottom:6px;}
+  .status-opts{display:flex;flex-direction:column;gap:8px;}
+  .status-opt{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--card-border);border-radius:12px;padding:12px;cursor:pointer;background:var(--card);}
+  .status-opt input{position:absolute;opacity:0;width:0;height:0;}
+  .status-opt .radio{flex:0 0 auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--secondary);margin-top:1px;display:inline-flex;align-items:center;justify-content:center;}
+  .status-opt .radio::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--primary);transform:scale(0);transition:transform .15s;}
+  .status-opt .txt .st{font-weight:600;font-size:14.5px;display:flex;align-items:center;gap:7px;}
+  .status-opt .txt .sd{font-size:13px;color:var(--muted);margin-top:2px;}
+  .status-opt:has(input:checked){border-color:var(--primary);background:var(--ok-bg);}
+  .status-opt:has(input:checked) .radio{border-color:var(--primary);}
+  .status-opt:has(input:checked) .radio::after{transform:scale(1);}
+
+  .prio-row{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--card-border);border-radius:12px;padding:12px;background:var(--card);margin-bottom:8px;cursor:pointer;}
+  .prio-row input{position:absolute;opacity:0;width:0;height:0;}
+  .prio-row .box{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--secondary);display:inline-flex;align-items:center;justify-content:center;color:#fff;margin-top:1px;}
+  .prio-row .box svg{opacity:0;transition:opacity .15s;}
+  .prio-row:has(input:checked){border-color:var(--primary);background:var(--ok-bg);}
+  .prio-row:has(input:checked) .box{background:var(--primary);border-color:var(--primary);}
+  .prio-row:has(input:checked) .box svg{opacity:1;}
+  .prio-row.disabled{opacity:.5;pointer-events:none;}
+  .prio-name{font-size:14.5px;font-weight:600;display:block;line-height:1.35;}
+  .prio-goal{font-size:12.5px;color:var(--muted);margin-top:2px;display:block;line-height:1.35;}
+
+  /* history */
+  details.hist{border-top:1px solid var(--divider);padding-top:6px;}
+  details.hist summary{list-style:none;cursor:pointer;font-weight:600;font-size:14.5px;padding:8px 0;display:flex;align-items:center;gap:8px;color:var(--primary);}
+  details.hist summary::-webkit-details-marker{display:none;}
+  details.hist summary .cv{transition:transform .18s;}
+  details.hist[open] summary .cv{transform:rotate(180deg);}
+  .hist-item{border-left:2px solid var(--divider);padding:8px 0 12px 14px;margin-left:4px;}
+  .hist-date{font-size:12.5px;color:var(--muted);font-weight:600;}
+  .hist-q{font-size:13.5px;margin-top:5px;line-height:1.45;}
+  .hist-q b{font-weight:600;color:var(--muted);}
+
+  /* ---------- Bottom sheet ---------- */
+  .sheet{position:fixed;inset:0;z-index:70;display:flex;align-items:flex-end;justify-content:center;}
+  .sheet-scrim{position:absolute;inset:0;background:rgba(28,26,25,.42);}
+  .sheet-panel{
+    position:relative;width:100%;max-width:560px;max-height:88vh;background:var(--card);
+    border-radius:22px 22px 0 0;box-shadow:0 -8px 30px rgba(0,0,0,.18);
+    display:flex;flex-direction:column;animation:sheetUp .22s ease;
+  }
+  @keyframes sheetUp{from{transform:translateY(20px);opacity:.6;}to{transform:translateY(0);opacity:1;}}
+  .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 12px 12px 20px;border-bottom:1px solid var(--divider);}
+  .sheet-head h3{font-size:17px;font-weight:700;}
+  .sheet-body{overflow-y:auto;padding:18px 20px;}
+  .sheet-foot{padding:8px 20px calc(18px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;}
+  .sheet-foot .btn{flex:1 1 auto;}
+
+  /* confirm */
+  .confirm{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .confirm-scrim{position:absolute;inset:0;background:rgba(28,26,25,.45);}
+  .confirm-card{position:relative;width:100%;max-width:400px;background:var(--card);border-radius:20px;padding:22px;box-shadow:var(--shadow);}
+  .confirm-card h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+  .confirm-card p{font-size:14.5px;color:var(--muted);line-height:1.5;}
+  .confirm-actions{display:flex;gap:10px;margin-top:20px;}
+  .confirm-actions .btn{flex:1 1 auto;}
+
+  /* toast */
+  .toast{
+    position:fixed;left:50%;transform:translateX(-50%);
+    bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 16px);
+    z-index:90;background:var(--text);color:var(--bg);
+    padding:11px 18px;border-radius:999px;font-size:14px;font-weight:600;
+    box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;
+    animation:toastIn .2s ease;max-width:calc(100% - 32px);
+  }
+  @keyframes toastIn{from{opacity:0;transform:translate(-50%,8px);}to{opacity:1;transform:translate(-50%,0);}}
+
+  .settings-note{font-size:13.5px;color:var(--muted);line-height:1.5;background:var(--linen-soft);border-radius:12px;padding:12px 14px;}
+  .set-group{display:flex;flex-direction:column;gap:10px;}
+  .set-group + .set-group{margin-top:26px;}
+  code.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;}
+  textarea.json{min-height:150px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.5;white-space:pre;}
+
+  /* ---------- Desktop ---------- */
+  @media (min-width:720px){
+    :root{--nav-h:0px;}
+    .topnav{display:flex;gap:4px;}
+    .topnav .tab{flex:0 0 auto;flex-direction:row;gap:7px;min-height:44px;padding:9px 16px;border-radius:999px;font-size:14.5px;}
+    .topnav .tab .tabic{width:auto;height:auto;background:none;}
+    .topnav .tab[aria-current="page"]{background:var(--ok-bg);}
+    .topnav .tab[aria-current="page"] .tabic{background:none;}
+    .tabbar{display:none;}
+    main{padding-bottom:56px;}
+    .toast{bottom:28px;}
+    .ov-body .wrap{padding-bottom:60px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>Langkah</div>
+    <nav class="topnav" aria-label="Navigasi utama"></nav>
+    <button class="icon-btn" data-act="open-settings" aria-label="Pengaturan">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+    </button>
+  </div>
+</div>
+
+<main><div class="wrap" id="view"></div></main>
+
+<nav class="tabbar" aria-label="Navigasi utama"><div class="tabbar-inner" id="tabbar"></div></nav>
+
+<div id="overlays"></div>
+<div id="toast-root" aria-live="polite"></div>
+
+<script>
+"use strict";
+(function(){
+  /* ========== Storage ========== */
+  var KEY = "langkah_v1";
+  var state = null;
+
+  function defaultState(){
+    return { version:1, identity:"", goals:[], logs:[], reviews:[], focus:[], focusWeek:null, reschedules:[] };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(!raw) return defaultState();
+      var p = JSON.parse(raw);
+      return normalize(p);
+    }catch(e){ return defaultState(); }
+  }
+  function normalize(p){
+    var d = defaultState();
+    if(!p || typeof p!=="object") return d;
+    d.identity = typeof p.identity==="string"? p.identity : "";
+    d.goals = Array.isArray(p.goals)? p.goals : [];
+    d.logs = Array.isArray(p.logs)? p.logs : [];
+    d.reviews = Array.isArray(p.reviews)? p.reviews : [];
+    d.focus = Array.isArray(p.focus)? p.focus : [];
+    d.focusWeek = p.focusWeek || null;
+    d.reschedules = Array.isArray(p.reschedules)? p.reschedules : [];
+    return d;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  /* ========== Utils ========== */
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function pad(n){ return n<10? "0"+n : ""+n; }
+  function ymd(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function parseYmd(s){ var a=String(s).split("-"); return new Date(+a[0], (+a[1])-1, +a[2]); }
+  function todayDate(){ var d=new Date(); return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+  function todayStr(){ return ymd(todayDate()); }
+  function startOfWeek(d){ var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); var off=(x.getDay()+6)%7; x.setDate(x.getDate()-off); return x; }
+  function weekKey(d){ return ymd(startOfWeek(d)); }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  var DOW = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
+  var DOW_ORDER = [1,2,3,4,5,6,0];
+  function fmtDate(s){ if(!s) return ""; try{ return parseYmd(s).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}); }catch(e){ return s; } }
+  function fmtDateShort(s){ if(!s) return ""; try{ return parseYmd(s).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"}); }catch(e){ return s; } }
+  function daysBetween(a,b){ return Math.round((parseYmd(a)-parseYmd(b))/86400000); }
+  function addMonths(d,m){ var x=new Date(d); x.setMonth(x.getMonth()+m); return x; }
+  function numOrNull(v){ if(v===""||v==null) return null; var n=Number(v); return isNaN(n)? null : n; }
+  function trimNum(n){ if(n==null) return ""; return (Math.round(n*100)/100).toString(); }
+
+  /* ========== Domain logic ========== */
+  function activeGoals(){ return state.goals.filter(function(g){ return !g.archived && !g.completed; }); }
+  function goalById(id){ return state.goals.find(function(g){ return g.id===id; }); }
+  function systemById(sid){
+    for(var i=0;i<state.goals.length;i++){
+      var s=(state.goals[i].systems||[]).find(function(x){return x.id===sid;});
+      if(s) return {sys:s, goal:state.goals[i]};
+    }
+    return null;
+  }
+  function occurrenceOn(sys, dateStr){
+    var wd = parseYmd(dateStr).getDay();
+    var scheduled = (sys.days||[]).indexOf(wd) !== -1;
+    var movedAway = state.reschedules.some(function(r){ return r.systemId===sys.id && r.from===dateStr; });
+    var movedIn = state.reschedules.some(function(r){ return r.systemId===sys.id && r.to===dateStr; });
+    return (scheduled && !movedAway) || movedIn;
+  }
+  function getLog(sid, dateStr){ return state.logs.find(function(l){ return l.systemId===sid && l.date===dateStr; }); }
+  function upsertLog(sid, goalId, dateStr, count, done){
+    var l = getLog(sid, dateStr);
+    if(!l){ l={ id:uid(), systemId:sid, goalId:goalId, date:dateStr, count:count, done:done }; state.logs.push(l); }
+    else { l.count=count; l.done=done; }
+    if(!done && count<=0){ state.logs = state.logs.filter(function(x){ return x!==l; }); }
+    save();
+  }
+
+  function goalProgress(g){
+    if(g.measureType==="milestone"){
+      var ms=g.milestones||[]; var total=ms.length; var done=ms.filter(function(m){return m.done;}).length;
+      var pct = total? Math.round(done/total*100) : 0;
+      return { type:"milestone", pct:pct, done:done, total:total };
+    }
+    var start=numOrNull(g.start), cur=numOrNull(g.current), tgt=numOrNull(g.target);
+    if(start==null) start=0; if(cur==null) cur=start;
+    var pct;
+    if(tgt==null){ pct=0; }
+    else if(tgt===start){ pct = cur>=tgt? 100 : 0; }
+    else { pct = (cur-start)/(tgt-start)*100; }
+    pct = Math.max(0, Math.min(100, Math.round(pct)));
+    return { type:"number", pct:pct, current:cur, target:tgt, start:start, unit:g.unit||"" };
+  }
+
+  function goalConsistency(g){
+    var ref = todayDate();
+    var ws = startOfWeek(ref);
+    var due=0, done=0, partial=0;
+    for(var i=0;i<7;i++){
+      var d=new Date(ws); d.setDate(ws.getDate()+i);
+      if(d.getTime() > ref.getTime()) break;
+      var ds=ymd(d);
+      (g.systems||[]).forEach(function(sys){
+        if(occurrenceOn(sys, ds)){
+          due++;
+          var l=getLog(sys.id, ds);
+          if(l && l.done) done++;
+          else if(l && l.count>0) partial++;
+        }
+      });
+    }
+    return { due:due, done:done, partial:partial, pct: due? Math.round(done/due*100):0 };
+  }
+
+  function reviewedThisWeek(){
+    var wk = weekKey(todayDate());
+    return state.reviews.some(function(r){ return weekKey(parseYmd(r.date))===wk; });
+  }
+  function lastReview(){
+    if(!state.reviews.length) return null;
+    return state.reviews.slice().sort(function(a,b){ return a.date<b.date?1:-1; })[0];
+  }
+  function isFocus(sid){
+    return state.focusWeek===weekKey(todayDate()) && state.focus.indexOf(sid)!==-1;
+  }
+
+  /* ========== Icons ========== */
+  var IC = {
+    today:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M19 12h2M17 7l1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M8 20h8"/></svg>',
+    goals:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/><circle cx="12" cy="12" r="0.3"/></svg>',
+    review:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v4h-4"/></svg>',
+    check:'<svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 6.5"/></svg>',
+    checkSmall:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19 6.5"/></svg>',
+    chevron:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+    back:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
+    close:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+    plus:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
+    quote:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h4v4c0 2.2-1.3 3.7-3.5 4.2l-.5-1.4C8.3 13.4 9 12.6 9 11.5H7V7Zm7 0h4v4c0 2.2-1.3 3.7-3.5 4.2l-.5-1.4c1.3-.4 2-1.2 2-2.3h-2V7Z"/></svg>',
+    trash:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
+    edit:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+    archive:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 12h4"/></svg>',
+    info:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+    star:'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.2 6.6.7-4.9 4.5 1.4 6.6L12 17l-6 3 1.4-6.6L2.5 8.9l6.6-.7Z"/></svg>',
+    ok:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',
+    warn:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>',
+    plan:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 0 1 4.5 1.5c0 1.7-2.5 2-2.5 4M12 17h.01"/></svg>',
+    seed:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-5 2-9 8-10-1 6-4 8-8 10Z"/><path d="M12 21c0-4-2-7-6-8 1 4 3 6 6 8Z"/><path d="M12 21v-6"/></svg>',
+    calm:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14s2-2 8-2 8 2 8 2M6 18s1.5-1 6-1 6 1 6 1M12 3v5"/><circle cx="12" cy="9" r="1.6"/></svg>'
+  };
+  var STATUS = {
+    on_track:{cls:"ok", ic:IC.ok, label:"Sesuai rencana", sub:"Jalan seperti yang kamu harapkan."},
+    adjust:{cls:"warn", ic:IC.warn, label:"Perlu penyesuaian", sub:"Sudah ada rencana perbaikan."},
+    needs_plan:{cls:"plan", ic:IC.plan, label:"Butuh rencana", sub:"Belum tahu langkah perbaikannya."}
+  };
+
+  /* ========== App shell / router ========== */
+  var view = document.getElementById("view");
+  var tabbar = document.getElementById("tabbar");
+  var topnav = document.querySelector(".topnav");
+  var overlays = document.getElementById("overlays");
+  var current = "today";
+  var ui = { showAllToday:false, expanded:{} };
+
+  var TABS = [
+    {id:"today", label:"Hari Ini", ic:IC.today},
+    {id:"goals", label:"Tujuan", ic:IC.goals},
+    {id:"review", label:"Review", ic:IC.review}
+  ];
+  function renderTabs(){
+    var html = TABS.map(function(t){
+      var cur = t.id===current? ' aria-current="page"' : "";
+      return '<button class="tab" data-nav="'+t.id+'"'+cur+'><span class="tabic" aria-hidden="true">'+t.ic+'</span><span>'+t.label+'</span></button>';
+    }).join("");
+    tabbar.innerHTML = html;
+    topnav.innerHTML = html;
+  }
+  function go(tab){ current=tab; ui.showAllToday=false; render(); window.scrollTo(0,0); }
+  function render(){
+    renderTabs();
+    if(current==="today") view.innerHTML = viewToday();
+    else if(current==="goals") view.innerHTML = viewGoals();
+    else if(current==="review"){ view.innerHTML = viewReview(); enforcePrioLimit(); }
+  }
+
+  /* ========== TODAY ========== */
+  function greeting(){
+    var h=new Date().getHours();
+    if(h<11) return "Selamat pagi";
+    if(h<15) return "Selamat siang";
+    if(h<18) return "Selamat sore";
+    return "Selamat malam";
+  }
+  function todayActions(){
+    var ds=todayStr(); var list=[];
+    activeGoals().forEach(function(g){
+      (g.systems||[]).forEach(function(sys){
+        if(occurrenceOn(sys, ds)){
+          list.push({ sys:sys, goal:g, log:getLog(sys.id, ds), focus:isFocus(sys.id) });
+        }
+      });
+    });
+    list.sort(function(a,b){ return (b.focus?1:0)-(a.focus?1:0); });
+    return list;
+  }
+  function viewToday(){
+    var dateLine = todayDate().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long"});
+    var h = '<div class="stack g16">';
+    h += '<div class="stack g8" style="margin-bottom:2px;">'
+       + '<div class="page-sub" style="text-transform:capitalize;">'+esc(dateLine)+'</div>'
+       + '<h1 class="page-title">'+greeting()+', Eprom.</h1>'
+       + '</div>';
+
+    // identity
+    if(state.identity){
+      h += '<div class="identity"><span class="q" aria-hidden="true">'+IC.quote+'</span>'
+         + '<div><div class="lbl">Aku hari ini</div><div class="t">'+esc(state.identity)+'</div></div></div>';
+    } else {
+      h += '<div class="identity"><span class="q" aria-hidden="true">'+IC.quote+'</span>'
+         + '<div><div class="t" style="margin-bottom:6px;">Tulis kalimat identitas untuk mengingatkan dirimu jadi orang seperti apa.</div>'
+         + '<button class="link-btn" data-act="edit-identity">Tulis kalimat identitas</button></div></div>';
+    }
+
+    // review reminder
+    if(activeGoals().length && !reviewedThisWeek()){
+      h += '<div class="notice"><span class="ic" aria-hidden="true">'+IC.review+'</span>'
+         + '<div>Review mingguanmu belum dilakukan. Butuh sekitar 2 menit. <button class="link-btn" data-nav="review">Buka Review</button></div></div>';
+    }
+
+    // actions
+    var acts = todayActions();
+    h += '<div class="stack g8" style="margin-top:4px;"><div class="section-label">Langkah hari ini</div>';
+
+    if(!activeGoals().length){
+      h += emptyBox(IC.seed, "Mulai dari satu tujuan", "Belum ada tujuan. Buat tujuan pertamamu, lalu langkah harianmu akan muncul di sini.", '<button class="btn small" data-act="new-goal">'+IC.plus+' Buat tujuan</button>');
+    } else if(!acts.length){
+      h += '<div class="card pad"><div class="empty" style="padding:22px 8px;"><div class="art">'+IC.calm+'</div><h3>Hari ini belum ada tindakan terjadwal</h3><p>Nikmati harimu. Langkahmu akan muncul sesuai jadwal yang kamu tetapkan.</p></div></div>';
+    } else {
+      var doneCount = acts.filter(function(a){ return a.log && a.log.done; }).length;
+      if(doneCount===acts.length){
+        h += '<div class="done-banner">'+IC.ok+' Langkah hari ini sudah selesai. Istirahat yang cukup, ya.</div>';
+      }
+      var limit = ui.showAllToday? acts.length : Math.min(3, acts.length);
+      for(var i=0;i<limit;i++){ h += actionCard(acts[i]); }
+      if(acts.length>3 && !ui.showAllToday){
+        h += '<button class="btn secondary" data-act="show-all-today">Lihat lainnya ('+(acts.length-3)+')</button>';
+      } else if(acts.length>3 && ui.showAllToday){
+        h += '<button class="btn secondary" data-act="hide-today">Tampilkan lebih sedikit</button>';
+      }
+    }
+    h += '</div></div>';
+    return h;
+  }
+  function emptyBox(art, title, body, cta){
+    return '<div class="card pad"><div class="empty"><div class="art">'+art+'</div><h3>'+esc(title)+'</h3><p>'+esc(body)+'</p>'+(cta||"")+'</div></div>';
+  }
+  function actionCard(a){
+    var sys=a.sys, g=a.goal, log=a.log;
+    var open = ui.expanded[sys.id];
+    var hasTarget = sys.target!=null && sys.target>0;
+    var count = log? log.count : 0;
+    var done = log? log.done : false;
+    var checkState = done? "true":"false";
+    var checkCls = "check" + (!done && count>0 && hasTarget? " partial":"");
+    var hasExtra = g.obstacle || g.ifThen;
+
+    var h='<div class="action card '+(done?"done ":"")+(open?"open":"")+'">';
+    h+='<div class="action-main">';
+    h+='<button class="'+checkCls+'" role="checkbox" aria-checked="'+checkState+'" aria-label="Tandai selesai: '+esc(sys.name)+'" data-act="toggle-done" data-sid="'+sys.id+'">'+IC.check+'</button>';
+    h+='<button class="action-tap" data-act="expand" data-sid="'+sys.id+'">';
+    h+='<div class="action-name">'+esc(sys.name)+'</div>';
+    h+='<div class="action-goal">';
+    if(a.focus) h+='<span class="chip-focus">'+IC.star+' Fokus</span>';
+    h+='<span>'+esc(g.name)+'</span>';
+    if(hasTarget) h+='<span>· Target '+trimNum(sys.target)+(sys.unit?(" "+esc(sys.unit)) :"" )+'</span>';
+    h+='</div></button>';
+    if(hasExtra) h+='<button class="expand-btn" data-act="expand" data-sid="'+sys.id+'" aria-label="Detail tindakan" aria-expanded="'+(open?"true":"false")+'">'+IC.chevron+'</button>';
+    h+='</div>';
+
+    if(hasTarget){
+      h+='<div class="counter">';
+      h+='<button class="step" data-act="count-dec" data-sid="'+sys.id+'" aria-label="Kurangi" '+(count<=0?"disabled":"")+'>&minus;</button>';
+      h+='<span class="count-val">'+count+' dari '+trimNum(sys.target)+(sys.unit?(" "+esc(sys.unit)):"")+'</span>';
+      h+='<button class="step" data-act="count-inc" data-sid="'+sys.id+'" aria-label="Tambah" '+(count>=sys.target?"disabled":"")+'>+</button>';
+      h+='</div>';
+    }
+
+    if(open && hasExtra){
+      h+='<div class="action-extra">';
+      if(g.obstacle){ h+='<div class="extra-block"><div class="k">Hambatan yang mungkin muncul</div><div class="v">'+esc(g.obstacle)+'</div></div>'; }
+      if(g.ifThen){ h+='<div class="extra-block"><div class="k">Rencanaku</div><div class="v">'+esc(g.ifThen)+'</div></div>'; }
+      h+='<button class="btn-ghost" data-act="reschedule" data-sid="'+sys.id+'">Jadwalkan ulang</button>';
+      h+='</div>';
+    }
+    h+='</div>';
+    return h;
+  }
+
+  /* ========== GOALS ========== */
+  function viewGoals(){
+    var act = activeGoals();
+    var archived = state.goals.filter(function(g){ return g.archived || g.completed; });
+    var h='<div class="stack g16">';
+    h+='<div class="stack g8"><h1 class="page-title">Tujuan</h1>'
+     + '<div class="page-sub">Hasil yang ingin kamu capai. Maksimal 4 tujuan aktif agar tetap fokus.</div></div>';
+
+    if(!act.length){
+      h+= emptyBox(IC.goals, "Belum ada tujuan aktif", "Tetapkan satu hasil yang ingin kamu capai, lalu tentukan langkah rutin untuk mendekatinya.", '<button class="btn small" data-act="new-goal">'+IC.plus+' Buat tujuan pertama</button>');
+    } else {
+      h+='<div class="stack g12">';
+      act.forEach(function(g){ h+=goalCard(g); });
+      h+='</div>';
+    }
+
+    if(act.length>0){
+      if(act.length<4){
+        h+='<button class="btn secondary" data-act="new-goal">'+IC.plus+' Tambah tujuan</button>';
+      } else {
+        h+='<div class="settings-note">Kamu sudah punya 4 tujuan aktif. Selesaikan atau arsipkan salah satunya untuk menambah yang baru.</div>';
+      }
+    }
+
+    if(archived.length){
+      h+='<details class="hist" style="margin-top:8px;"><summary>Tujuan selesai &amp; arsip ('+archived.length+')<span class="cv" aria-hidden="true" style="margin-left:auto;">'+IC.chevron+'</span></summary><div class="stack g12" style="margin-top:10px;">';
+      archived.forEach(function(g){ h+=goalCard(g,true); });
+      h+='</div></details>';
+    }
+    h+='</div>';
+    return h;
+  }
+  function statusPill(g){
+    if(g.completed) return '<span class="status-pill ok">'+IC.ok+' Selesai</span>';
+    if(g.archived) return '<span class="status-pill none">'+IC.archive+' Arsip</span>';
+    var s=g.status? STATUS[g.status]:null;
+    if(!s) return '<span class="status-pill none">Belum direview</span>';
+    return '<span class="status-pill '+s.cls+'">'+s.ic+' '+s.label+'</span>';
+  }
+  function sysSummary(g){
+    var n=(g.systems||[]).length;
+    if(!n) return "Belum ada langkah rutin.";
+    var parts=(g.systems||[]).map(function(s){
+      var days=(s.days||[]).slice().sort(function(a,b){return DOW_ORDER.indexOf(a)-DOW_ORDER.indexOf(b);}).map(function(d){return DOW[d];}).join(", ");
+      return "<b>"+esc(s.name)+"</b> · "+(days||"tanpa jadwal");
+    });
+    return parts.join("<br>");
+  }
+  function goalCard(g, compact){
+    var p=goalProgress(g);
+    var c=goalConsistency(g);
+    var h='<div class="card goal-card" data-act="open-goal" data-gid="'+g.id+'" role="button" tabindex="0">';
+    h+='<div class="goal-head"><div style="min-width:0;"><div class="goal-name">'+esc(g.name)+'</div>';
+    var meta=[];
+    if(g.deadline){
+      var dleft=daysBetween(g.deadline, todayStr());
+      meta.push(fmtDateShort(g.deadline)+(dleft>=0?(" · "+dleft+" hari lagi"):" · lewat"));
+    }
+    if(meta.length) h+='<div class="goal-meta">'+esc(meta.join(""))+'</div>';
+    h+='</div>'+statusPill(g)+'</div>';
+
+    if(!compact){
+      // progress hasil
+      h+='<div class="metric"><div class="metric-label"><span class="name">Progres tujuan</span><span class="val">'+progressText(p)+'</span></div>'
+       + '<div class="bar"><span style="width:'+p.pct+'%"></span></div></div>';
+      // konsistensi
+      h+='<div class="metric"><div class="metric-label"><span class="name">Konsistensi minggu ini</span><span class="val">'+(c.due? (c.done+" dari "+c.due+" sesi") : "belum jatuh tempo")+'</span></div>'
+       + '<div class="bar sec"><span style="width:'+(c.pct)+'%"></span></div></div>';
+      h+='<div class="sys-summary">'+sysSummary(g)+'</div>';
+    } else {
+      h+='<div class="metric"><div class="metric-label"><span class="name">Progres tujuan</span><span class="val">'+progressText(p)+'</span></div><div class="bar"><span style="width:'+p.pct+'%"></span></div></div>';
+    }
+    h+='</div>';
+    return h;
+  }
+  function progressText(p){
+    if(p.type==="milestone") return p.done+" dari "+p.total+" tahap · "+p.pct+"%";
+    var t = p.pct+"%";
+    if(p.current!=null){ t = trimNum(p.current)+(p.unit?(" "+esc(p.unit)):"")+" · "+p.pct+"%"; }
+    return t;
+  }
+
+  /* ========== GOAL DETAIL ========== */
+  function openGoal(gid){
+    var g=goalById(gid); if(!g) return;
+    var p=goalProgress(g), c=goalConsistency(g);
+    var reviews = state.reviews.filter(function(r){ return (r.entries||[]).some(function(e){return e.goalId===gid;}); })
+                  .sort(function(a,b){return a.date<b.date?1:-1;});
+
+    var b='<div class="stack g24">';
+    // 1 name, why, deadline
+    b+='<div class="stack g12">';
+    b+='<div>'+statusPill(g)+'</div>';
+    b+='<h1 class="page-title">'+esc(g.name)+'</h1>';
+    if(g.deadline){
+      var dl=daysBetween(g.deadline, todayStr());
+      b+='<div class="page-sub">Tenggat: '+fmtDate(g.deadline)+(dl>=0?(" · "+dl+" hari lagi"):" · sudah lewat")+'</div>';
+    }
+    if(g.why){ b+='<div class="identity"><span class="q" aria-hidden="true">'+IC.quote+'</span><div><div class="lbl">Kenapa ini berarti</div><div class="t">'+esc(g.why)+'</div></div></div>'; }
+    b+='</div>';
+
+    // 2 progress + update
+    b+='<div class="card pad stack g16"><div class="stack g12">';
+    b+='<div class="metric"><div class="metric-label"><span class="name">Progres tujuan</span><span class="val">'+progressText(p)+'</span></div><div class="bar"><span style="width:'+p.pct+'%"></span></div></div>';
+    if(p.type==="milestone" && p.total){
+      b+='<div class="stack g8">';
+      (g.milestones||[]).forEach(function(m){
+        b+='<div style="display:flex;gap:10px;align-items:center;font-size:14.5px;'+(m.done?"color:var(--muted);":"")+'"><span class="box" style="width:22px;height:22px;border-radius:7px;border:2px solid '+(m.done?"var(--primary)":"var(--secondary)")+';background:'+(m.done?"var(--primary)":"transparent")+';color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;">'+(m.done?IC.checkSmall:"")+'</span>'+(m.done?'<span style="text-decoration:line-through;">'+esc(m.name)+'</span>':esc(m.name))+'</div>';
+      });
+      b+='</div>';
+    }
+    b+='</div><button class="btn" data-act="update-progress" data-gid="'+g.id+'">Update progres</button></div>';
+
+    // 3 consistency
+    b+='<div class="card pad stack g12"><div class="section-label">Konsistensi tindakan minggu ini</div>';
+    if(!c.due){
+      b+='<div class="settings-note">Belum ada sesi terjadwal yang jatuh tempo minggu ini.</div>';
+    } else {
+      b+='<div class="metric"><div class="metric-label"><span class="name">Sesi selesai</span><span class="val">'+c.done+' dari '+c.due+' sesi</span></div><div class="bar sec"><span style="width:'+c.pct+'%"></span></div></div>';
+      if(c.partial) b+='<div class="page-sub">'+c.partial+' sesi sudah dimulai sebagian, belum dihitung selesai penuh.</div>';
+    }
+    b+='<div class="sys-summary" style="border-top:1px solid var(--divider);padding-top:10px;">'+sysSummary(g)+'</div>';
+    b+='<div class="settings-note">Mencentang langkah rutin tidak mengubah progres tujuan. Keduanya sengaja dipisah.</div>';
+    b+='</div>';
+
+    // 4 obstacle + plan
+    if(g.obstacle || g.ifThen){
+      b+='<div class="card pad stack g12"><div class="section-label">Hambatan &amp; rencana</div>';
+      if(g.obstacle) b+='<div class="extra-block"><div class="k">Hambatan yang mungkin muncul</div><div class="v">'+esc(g.obstacle)+'</div></div>';
+      if(g.ifThen) b+='<div class="extra-block"><div class="k">Rencanaku</div><div class="v">'+esc(g.ifThen)+'</div></div>';
+      b+='</div>';
+    }
+
+    // 5 review history
+    if(reviews.length){
+      b+='<details class="hist"><summary>Riwayat review ('+reviews.length+')<span class="cv" aria-hidden="true">'+IC.chevron+'</span></summary><div style="margin-top:6px;">';
+      reviews.forEach(function(r){
+        var e=(r.entries||[]).find(function(x){return x.goalId===gid;})||{};
+        var s=e.status?STATUS[e.status]:null;
+        b+='<div class="hist-item"><div class="hist-date">'+fmtDateShort(r.date)+(s?(' · '+s.label):"")+'</div>';
+        if(e.whatMoved) b+='<div class="hist-q"><b>Maju:</b> '+esc(e.whatMoved)+'</div>';
+        if(e.whatBlocked) b+='<div class="hist-q"><b>Hambatan:</b> '+esc(e.whatBlocked)+'</div>';
+        if(e.adjustment) b+='<div class="hist-q"><b>Penyesuaian:</b> '+esc(e.adjustment)+'</div>';
+        b+='</div>';
+      });
+      b+='</div></details>';
+    }
+
+    // actions
+    b+='<div class="stack g8" style="margin-top:4px;">';
+    if(!g.completed && !g.archived){
+      b+='<button class="btn secondary" data-act="edit-goal" data-gid="'+g.id+'">'+IC.edit+' Edit tujuan</button>';
+      b+='<button class="btn secondary" data-act="complete-goal" data-gid="'+g.id+'">'+IC.ok+' Tandai tujuan tercapai</button>';
+      b+='<button class="btn secondary" data-act="archive-goal" data-gid="'+g.id+'">'+IC.archive+' Arsipkan</button>';
+    } else {
+      b+='<button class="btn secondary" data-act="unarchive-goal" data-gid="'+g.id+'">Aktifkan kembali</button>';
+    }
+    b+='<button class="btn danger" data-act="delete-goal" data-gid="'+g.id+'">'+IC.trash+' Hapus tujuan</button>';
+    b+='</div>';
+
+    b+='</div>';
+    openOverlay({ title:"Detail tujuan", body:b, back:true });
+  }
+
+  /* ========== WIZARD ========== */
+  var draft=null;
+  function newDraft(g){
+    if(g){
+      return JSON.parse(JSON.stringify({
+        id:g.id, step:1, name:g.name, deadline:g.deadline, why:g.why||"", obstacle:g.obstacle||"", ifThen:g.ifThen||"",
+        measureType:g.measureType, start:g.start, current:g.current, target:g.target, unit:g.unit||"",
+        milestones:(g.milestones||[]).map(function(m){return {id:m.id,name:m.name,done:m.done};}),
+        systems:(g.systems||[]).map(function(s){return {id:s.id,name:s.name,days:s.days.slice(),target:s.target,unit:s.unit||""};})
+      }));
+    }
+    return {
+      id:null, step:1, name:"", deadline:ymd(addMonths(todayDate(),3)), why:"", obstacle:"", ifThen:"",
+      measureType:"number", start:"", current:"", target:"", unit:"",
+      milestones:[{id:uid(),name:"",done:false}],
+      systems:[{id:uid(),name:"",days:[1,2,3,4,5],target:"",unit:""}]
+    };
+  }
+  function startWizard(g){ draft=newDraft(g); ui.wizErr=false; renderWizard(); }
+  function readWizardStep(){
+    if(!draft) return;
+    var root=document.getElementById("wizform"); if(!root) return;
+    if(draft.step===1){
+      draft.name=val("wz-name"); draft.deadline=val("wz-deadline"); draft.def=val("wz-def");
+      if(draft.measureType==="number"){
+        draft.start=val("wz-start"); draft.current=val("wz-current"); draft.target=val("wz-target"); draft.unit=val("wz-unit");
+      } else {
+        var ms=[]; root.querySelectorAll("[data-ms]").forEach(function(inp){ ms.push({id:inp.getAttribute("data-ms"), name:inp.value, done:msDone(inp.getAttribute("data-ms"))}); });
+        draft.milestones=ms.length?ms:draft.milestones;
+      }
+    } else if(draft.step===2){
+      draft.systems.forEach(function(s,i){
+        var nm=document.getElementById("sys-name-"+i); if(nm) s.name=nm.value;
+        var tg=document.getElementById("sys-target-"+i); if(tg) s.target=tg.value;
+        var un=document.getElementById("sys-unit-"+i); if(un) s.unit=un.value;
+      });
+    } else if(draft.step===3){
+      draft.why=val("wz-why"); draft.obstacle=val("wz-obstacle"); draft.ifThen=val("wz-ifthen");
+    }
+  }
+  function msDone(id){ var g=draft.id?goalById(draft.id):null; if(!g||!g.milestones)return false; var m=g.milestones.find(function(x){return x.id===id;}); return m?m.done:false; }
+  function val(id){ var e=document.getElementById(id); return e?e.value:""; }
+
+  function renderWizard(){
+    var d=draft;
+    var titleMap={1:"Tujuanmu",2:"Langkah rutin",3:"Biar lebih mudah dijalani"};
+    var body='<div class="stack g24" id="wizform">';
+    body+='<div><div class="step-dots">'+[1,2,3].map(function(n){return '<span class="d '+(n<=d.step?"on":"")+'"></span>';}).join("")+'</div>'
+       + '<div class="wiz-count">Langkah '+d.step+' dari 3</div></div>';
+    body+='<h2 class="page-title" style="font-size:23px;">'+titleMap[d.step]+'</h2>';
+
+    if(d.step===1){
+      body+=field("Apa yang ingin kamu capai?", '<input class="input" id="wz-name" value="'+esc(d.name)+'" placeholder="mis. Mendapatkan 2 klien baru" autocomplete="off">', d.err&&!d.name?"Isi dulu tujuanmu, ya.":"");
+      body+=field("Kapan ingin dicapai?", '<input class="input" id="wz-deadline" type="date" value="'+esc(d.deadline)+'">', "", "Default 3 bulan dari sekarang, bisa kamu ubah.");
+      body+='<div class="field"><label>Bagaimana kamu tahu tujuan ini tercapai?</label>'
+        + '<div class="seg" role="group" aria-label="Cara mengukur">'
+        + '<button type="button" data-act="measure" data-m="number" aria-pressed="'+(d.measureType==="number")+'">Angka</button>'
+        + '<button type="button" data-act="measure" data-m="milestone" aria-pressed="'+(d.measureType==="milestone")+'">Tahapan</button>'
+        + '</div></div>';
+      if(d.measureType==="number"){
+        body+='<div class="grid2">'
+          + fieldRaw("Nilai awal", '<input class="input" id="wz-start" inputmode="decimal" value="'+esc(d.start)+'" placeholder="0">')
+          + fieldRaw("Target", '<input class="input" id="wz-target" inputmode="decimal" value="'+esc(d.target)+'" placeholder="2">')
+          + '</div>';
+        body+='<div class="grid2">'
+          + fieldRaw("Nilai saat ini", '<input class="input" id="wz-current" inputmode="decimal" value="'+esc(d.current)+'" placeholder="0">')
+          + fieldRaw("Satuan", '<input class="input" id="wz-unit" value="'+esc(d.unit)+'" placeholder="klien" autocomplete="off">')
+          + '</div>';
+        body+='<div class="settings-note">Target boleh naik atau turun. Progres dihitung dari perubahan nilai awal menuju target.</div>';
+      } else {
+        body+='<div class="field"><label>Daftar tahapan (milestone)</label><div id="ms-list">';
+        d.milestones.forEach(function(m,i){
+          body+='<div class="ms-row"><input class="input" data-ms="'+m.id+'" value="'+esc(m.name)+'" placeholder="Tahap '+(i+1)+'" autocomplete="off">'
+             + (d.milestones.length>1?'<button type="button" class="ms-del" data-act="ms-del" data-i="'+i+'" aria-label="Hapus tahap">'+IC.trash+'</button>':'')
+             + '</div>';
+        });
+        body+='</div><button type="button" class="btn-ghost" data-act="ms-add">'+IC.plus+' Tambah tahap</button>';
+        body+='<div class="hint">Progres dihitung dari proporsi tahap selesai.</div></div>';
+      }
+    }
+    else if(d.step===2){
+      body+='<div class="settings-note">Tindakan berulang untuk mendekati tujuanmu. Mulai dengan satu, boleh sampai tiga.</div>';
+      d.systems.forEach(function(s,i){ body+=systemEditor(s,i,d.systems.length); });
+      if(d.systems.length<3){ body+='<button type="button" class="btn secondary" data-act="sys-add">'+IC.plus+' Tambah langkah rutin</button>'; }
+    }
+    else {
+      body+='<div class="settings-note">Semua ini opsional, tapi membantumu tetap jalan saat berat.</div>';
+      body+=field("Kenapa tujuan ini berarti buatmu?", '<textarea class="input" id="wz-why" placeholder="mis. Supaya bisa transisi penuh jadi freelancer.">'+esc(d.why)+'</textarea>');
+      body+=field("Apa hambatan yang paling mungkin muncul?", '<textarea class="input" id="wz-obstacle" placeholder="mis. Bingung mulai dari mana.">'+esc(d.obstacle)+'</textarea>');
+      body+=field('Rencana “kalau… aku akan…”', '<textarea class="input" id="wz-ifthen" placeholder="Kalau bingung mulai dari mana, aku akan memilih satu prospek dari daftar.">'+esc(d.ifThen)+'</textarea>');
+    }
+    body+='</div>';
+
+    var footBtns = d.step===1
+      ? '<button class="btn" data-act="wiz-next">Lanjut</button>'
+      : (d.step===3
+          ? '<button class="btn secondary" data-act="wiz-back">Kembali</button><button class="btn" data-act="wiz-save">'+(draft.id?"Simpan perubahan":"Simpan tujuan")+'</button>'
+          : '<button class="btn secondary" data-act="wiz-back">Kembali</button><button class="btn" data-act="wiz-next">Lanjut</button>');
+
+    openOverlay({
+      title: draft.id? "Edit tujuan" : "Buat tujuan",
+      body: body,
+      close:true,
+      closeAct:"wiz-cancel",
+      foot: footBtns
+    });
+  }
+  function field(label, control, err, hint){
+    return '<div class="field'+(err?" invalid":"")+'"><label>'+label+'</label>'+control+(hint?'<div class="hint">'+hint+'</div>':"")+(err?'<div class="err">'+esc(err)+'</div>':"")+'</div>';
+  }
+  function fieldRaw(label, control){ return '<div class="field" style="margin-bottom:0;"><label>'+label+'</label>'+control+'</div>'; }
+  function systemEditor(s,i,total){
+    var h='<div class="sys-editor"><div class="se-head"><span class="t">Langkah '+(i+1)+'</span>'
+      + (total>1?'<button type="button" class="link-btn" data-act="sys-del" data-i="'+i+'" style="color:var(--plan);">Hapus</button>':'')+'</div>';
+    h+=field("Tindakan apa yang akan kamu ulangi?", '<input class="input" id="sys-name-'+i+'" value="'+esc(s.name)+'" placeholder="mis. Menghubungi prospek" autocomplete="off">', (draft.err&&!s.name)?"Isi nama tindakan.":"");
+    h+='<div class="field"><label>Hari apa saja?</label><div class="chips" role="group" aria-label="Pilih hari">';
+    DOW_ORDER.forEach(function(wd){
+      var on=(s.days||[]).indexOf(wd)!==-1;
+      h+='<button type="button" class="chip" data-act="day" data-i="'+i+'" data-d="'+wd+'" aria-pressed="'+on+'">'+DOW[wd]+'</button>';
+    });
+    h+='</div>'+(draft.err&&!(s.days||[]).length?'<div class="err">Pilih minimal satu hari.</div>':'')+'</div>';
+    h+='<div class="grid2">'
+      + fieldRaw("Target per sesi (opsional)", '<input class="input" id="sys-target-'+i+'" inputmode="decimal" value="'+esc(s.target)+'" placeholder="mis. 5">')
+      + fieldRaw("Satuan (opsional)", '<input class="input" id="sys-unit-'+i+'" value="'+esc(s.unit)+'" placeholder="prospek" autocomplete="off">')
+      + '</div>';
+    h+='</div>';
+    return h;
+  }
+  function wizNext(){
+    readWizardStep();
+    if(draft.step===1){
+      draft.err=false;
+      if(!draft.name.trim()){ draft.err=true; renderWizard(); return; }
+      if(draft.measureType==="milestone"){ draft.milestones=draft.milestones.filter(function(m){return m.name.trim();}); if(!draft.milestones.length) draft.milestones=[{id:uid(),name:"",done:false}]; }
+    }
+    if(draft.step===2){
+      draft.err=false;
+      var bad=draft.systems.some(function(s){ return !s.name.trim() || !(s.days||[]).length; });
+      if(bad){ draft.err=true; renderWizard(); return; }
+    }
+    draft.step++; draft.err=false; renderWizard();
+    document.querySelector(".ov-body").scrollTop=0;
+  }
+  function wizBack(){ readWizardStep(); draft.step--; draft.err=false; renderWizard(); document.querySelector(".ov-body").scrollTop=0; }
+  function wizSave(){
+    readWizardStep();
+    var d=draft;
+    var g = d.id? goalById(d.id) : null;
+    var isNew=!g;
+    if(isNew){
+      if(activeGoals().length>=4){ toast("Maksimal 4 tujuan aktif."); return; }
+      g={ id:uid(), createdAt:todayStr(), archived:false, completed:false, status:null };
+    }
+    g.name=d.name.trim(); g.deadline=d.deadline; g.why=d.why.trim(); g.obstacle=d.obstacle.trim(); g.ifThen=d.ifThen.trim();
+    g.measureType=d.measureType;
+    if(d.measureType==="number"){
+      var st=numOrNull(d.start), tg=numOrNull(d.target), cu=numOrNull(d.current);
+      g.start = st==null?0:st; g.target = tg; g.current = cu==null? g.start : cu; g.unit=d.unit.trim();
+      g.milestones=[];
+    } else {
+      var existing = g.milestones||[];
+      g.milestones = d.milestones.filter(function(m){return m.name.trim();}).map(function(m){
+        var old=existing.find(function(x){return x.id===m.id;});
+        return { id:m.id, name:m.name.trim(), done: old? old.done : (m.done||false) };
+      });
+      g.start=null;g.current=null;g.target=null;g.unit="";
+    }
+    g.systems = d.systems.filter(function(s){return s.name.trim() && (s.days||[]).length;}).map(function(s){
+      return { id:s.id, name:s.name.trim(), days:s.days.slice().sort(function(a,b){return a-b;}), target:numOrNull(s.target), unit:(s.unit||"").trim() };
+    });
+    if(isNew) state.goals.push(g);
+    save();
+    draft=null; closeOverlay();
+    toast(isNew?"Tujuan tersimpan":"Perubahan tersimpan");
+    current="goals"; render();
+  }
+
+  /* ========== UPDATE PROGRESS SHEET ========== */
+  function openUpdateProgress(gid){
+    var g=goalById(gid); if(!g) return;
+    var b='';
+    if(g.measureType==="number"){
+      var p=goalProgress(g);
+      b+='<div class="settings-note" style="margin-bottom:16px;">Target: '+trimNum(g.target)+(g.unit?(" "+esc(g.unit)):"")+' · dari awal '+trimNum(g.start)+'. Progres saat ini '+p.pct+'%.</div>';
+      b+=field("Nilai saat ini"+(g.unit?(" ("+esc(g.unit)+")"):""), '<input class="input" id="up-current" inputmode="decimal" value="'+esc(trimNum(g.current))+'">');
+    } else {
+      b+='<div class="settings-note" style="margin-bottom:16px;">Centang tahap yang sudah selesai.</div><div class="stack g8" id="up-ms">';
+      (g.milestones||[]).forEach(function(m){
+        b+='<label class="prio-row" style="cursor:pointer;"><input type="checkbox" data-msid="'+m.id+'" '+(m.done?"checked":"")+'><span class="box">'+IC.checkSmall+'</span><span class="prio-name">'+esc(m.name)+'</span></label>';
+      });
+      b+='</div>';
+    }
+    openSheet({
+      title:"Update progres",
+      body:b,
+      foot:'<button class="btn secondary" data-act="sheet-close">Batal</button><button class="btn" data-act="save-progress" data-gid="'+g.id+'">Simpan</button>'
+    });
+  }
+  function saveProgress(gid){
+    var g=goalById(gid); if(!g){ closeSheet(); return; }
+    if(g.measureType==="number"){
+      var v=numOrNull(val("up-current"));
+      if(v!=null) g.current=v;
+    } else {
+      document.querySelectorAll("#up-ms [data-msid]").forEach(function(cb){
+        var m=(g.milestones||[]).find(function(x){return x.id===cb.getAttribute("data-msid");});
+        if(m) m.done=cb.checked;
+      });
+    }
+    save(); closeSheet(); toast("Progres diperbarui");
+    // refresh goal detail if open
+    if(document.getElementById("overlay-main")) openGoal(gid);
+    else render();
+  }
+
+  /* ========== RESCHEDULE SHEET ========== */
+  function openReschedule(sid){
+    var info=systemById(sid); if(!info) return;
+    var tomorrow=new Date(todayDate()); tomorrow.setDate(tomorrow.getDate()+1);
+    var b='<div class="settings-note" style="margin-bottom:16px;">Pindahkan sesi <b>'+esc(info.sys.name)+'</b> dari hari ini ke tanggal lain, tanpa dianggap terlewat.</div>';
+    b+=field("Jadwalkan ulang ke tanggal", '<input class="input" id="rs-date" type="date" min="'+ymd(tomorrow)+'" value="'+ymd(tomorrow)+'">');
+    openSheet({
+      title:"Jadwalkan ulang",
+      body:b,
+      foot:'<button class="btn secondary" data-act="sheet-close">Batal</button><button class="btn" data-act="save-reschedule" data-sid="'+sid+'">Pindahkan</button>'
+    });
+  }
+  function saveReschedule(sid){
+    var to=val("rs-date"); var from=todayStr();
+    if(!to || to<=from){ toast("Pilih tanggal setelah hari ini."); return; }
+    state.reschedules = state.reschedules.filter(function(r){ return !(r.systemId===sid && r.from===from); });
+    state.reschedules.push({ systemId:sid, from:from, to:to });
+    save(); closeSheet(); toast("Sesi dipindahkan ke "+fmtDateShort(to)); render();
+  }
+
+  /* ========== IDENTITY SHEET ========== */
+  function openIdentity(){
+    var b=field('“Aku ingin menjadi orang yang…”', '<textarea class="input" id="id-text" placeholder="Aku membangun kebiasaan bekerja dengan konsisten.">'+esc(state.identity)+'</textarea>', "", "Kalimat ini muncul di halaman Hari Ini sebagai pengingat.");
+    openSheet({ title:"Kalimat identitas", body:b, foot:'<button class="btn secondary" data-act="sheet-close">Batal</button><button class="btn" data-act="save-identity">Simpan</button>' });
+  }
+  function saveIdentity(){
+    state.identity=val("id-text").trim(); save(); closeSheet(); toast("Identitas tersimpan");
+    if(document.getElementById("overlay-main") && current!=="today"){} render();
+  }
+
+  /* ========== REVIEW ========== */
+  function viewReview(){
+    var act=activeGoals();
+    var h='<div class="stack g16"><div class="stack g8"><h1 class="page-title">Review mingguan</h1><div class="page-sub">Sekitar 2 menit. Lihat apa yang maju, apa yang menghambat, dan satu penyesuaian.</div></div>';
+
+    var lr=lastReview();
+    if(lr){ h+='<div class="page-sub" style="margin-top:-4px;">Terakhir direview: '+fmtDate(lr.date)+'</div>'; }
+
+    if(!act.length){
+      h+=emptyBox(IC.review, "Belum ada tujuan untuk direview", "Buat tujuan dulu, lalu kamu bisa meninjau progres tiap minggu di sini.", '<button class="btn small" data-act="new-goal">'+IC.plus+' Buat tujuan</button>');
+      h+='</div>'; return h;
+    }
+
+    if(reviewedThisWeek()){
+      h+='<div class="done-banner">'+IC.ok+' Review minggu ini sudah selesai. Kamu bisa memperbaruinya kapan saja.</div>';
+    }
+
+    h+='<form id="review-form" class="stack g16" onsubmit="return false">';
+    act.forEach(function(g){
+      var p=goalProgress(g), c=goalConsistency(g);
+      var prevStatus = g.status||"";
+      h+='<div class="card rev-goal" data-gid="'+g.id+'">';
+      h+='<div class="goal-name" style="font-size:17px;">'+esc(g.name)+'</div>';
+      h+='<div class="rev-metrics">';
+      h+='<div class="metric"><div class="metric-label"><span class="name">Progres tujuan</span><span class="val">'+progressText(p)+'</span></div><div class="bar"><span style="width:'+p.pct+'%"></span></div></div>';
+      h+='<div class="metric"><div class="metric-label"><span class="name">Konsistensi minggu ini</span><span class="val">'+(c.due?(c.done+" dari "+c.due+" sesi"):"belum jatuh tempo")+'</span></div><div class="bar sec"><span style="width:'+c.pct+'%"></span></div></div>';
+      h+='</div>';
+      h+='<div class="q-block"><label>Apa yang sudah maju?</label><textarea class="input" data-rev="moved" data-gid="'+g.id+'" placeholder="Hal kecil pun berarti."></textarea></div>';
+      h+='<div class="q-block"><label>Apa yang menghambat?</label><textarea class="input" data-rev="blocked" data-gid="'+g.id+'"></textarea></div>';
+      h+='<div class="q-block"><label>Apa satu penyesuaian minggu depan?</label><textarea class="input" data-rev="adjust" data-gid="'+g.id+'"></textarea></div>';
+      h+='<div class="q-block"><label>Status tujuan ini</label><div class="status-opts">';
+      ["on_track","adjust","needs_plan"].forEach(function(k){
+        var s=STATUS[k];
+        h+='<label class="status-opt"><input type="radio" name="st-'+g.id+'" value="'+k+'" '+(prevStatus===k?"checked":"")+'><span class="radio" aria-hidden="true"></span><span class="txt"><span class="st">'+s.ic+' '+s.label+'</span><span class="sd">'+s.sub+'</span></span></label>';
+      });
+      h+='</div></div>';
+      h+='</div>';
+    });
+
+    // priorities
+    var sysList=[];
+    act.forEach(function(g){ (g.systems||[]).forEach(function(s){ sysList.push({s:s,g:g}); }); });
+    h+='<div class="card pad stack g12"><div class="section-label">Pilih maksimal 3 fokus minggu depan</div><div class="page-sub" style="margin-top:-6px;">Fokus akan ditandai saat langkah itu muncul di Hari Ini.</div><div id="prio-list">';
+    sysList.forEach(function(o){
+      var checked = isFocus(o.s.id);
+      h+='<label class="prio-row" data-prio-wrap><input type="checkbox" data-prio="'+o.s.id+'" '+(checked?"checked":"")+'><span class="box">'+IC.checkSmall+'</span><span><span class="prio-name">'+esc(o.s.name)+'</span><span class="prio-goal">'+esc(o.g.name)+'</span></span></label>';
+    });
+    if(!sysList.length){ h+='<div class="settings-note">Belum ada langkah rutin untuk dijadikan fokus.</div>'; }
+    h+='</div></div>';
+
+    h+='<button class="btn" data-act="save-review">Simpan review</button>';
+    h+='</form></div>';
+    return h;
+  }
+  function enforcePrioLimit(){
+    var boxes=Array.prototype.slice.call(document.querySelectorAll('[data-prio]'));
+    var checked=boxes.filter(function(b){return b.checked;});
+    boxes.forEach(function(b){
+      var wrap=b.closest("[data-prio-wrap]");
+      if(!b.checked && checked.length>=3){ wrap.classList.add("disabled"); }
+      else { wrap.classList.remove("disabled"); }
+    });
+  }
+  function saveReview(){
+    var act=activeGoals();
+    var entries=[];
+    act.forEach(function(g){
+      var moved=revVal("moved",g.id), blocked=revVal("blocked",g.id), adjust=revVal("adjust",g.id);
+      var st=document.querySelector('input[name="st-'+g.id+'"]:checked');
+      var status=st?st.value:g.status;
+      if(status) g.status=status;
+      entries.push({ goalId:g.id, whatMoved:moved, whatBlocked:blocked, adjustment:adjust, status:status||null });
+    });
+    var prios=Array.prototype.slice.call(document.querySelectorAll('[data-prio]:checked')).slice(0,3).map(function(b){return b.getAttribute("data-prio");});
+    state.reviews.push({ id:uid(), date:todayStr(), createdAt:new Date().toISOString(), entries:entries, priorities:prios });
+    state.focus=prios; state.focusWeek=weekKey(todayDate());
+    save(); toast("Review tersimpan"); go("today");
+  }
+  function revVal(kind,gid){ var e=document.querySelector('[data-rev="'+kind+'"][data-gid="'+gid+'"]'); return e?e.value.trim():""; }
+
+  /* ========== SETTINGS ========== */
+  function openSettings(){
+    var g=activeGoals().length, total=state.goals.length;
+    var b='<div class="stack g24">';
+    b+='<div class="set-group"><div class="section-label">Kalimat identitas</div>';
+    b+='<div class="card pad">'+(state.identity? '<div class="identity" style="padding:0;background:none;"><span class="q" style="color:var(--primary);">'+IC.quote+'</span><div class="t">'+esc(state.identity)+'</div></div>' : '<div class="page-sub">Belum diisi.</div>')+'</div>';
+    b+='<button class="btn secondary" data-act="edit-identity">'+IC.edit+' '+(state.identity?"Ubah identitas":"Tulis identitas")+'</button></div>';
+
+    b+='<div class="set-group"><div class="section-label">Penyimpanan data</div>';
+    b+='<div class="settings-note">Semua datamu disimpan di browser perangkat ini saja. Tidak ada akun, tidak dikirim ke mana pun. Menghapus data browser atau berpindah perangkat akan menghilangkannya, jadi sesekali buat cadangan lewat ekspor.</div>';
+    b+='<div class="page-sub">'+total+' tujuan tersimpan · '+g+' aktif · '+state.logs.length+' catatan tindakan · '+state.reviews.length+' review.</div>';
+    b+='</div>';
+
+    b+='<div class="set-group"><div class="section-label">Cadangan (ekspor / impor)</div>';
+    b+='<div class="settings-note">Salin teks di bawah untuk mencadangkan. Untuk memulihkan, tempel cadangan lalu tekan Impor.</div>';
+    b+='<textarea class="input json" id="set-json" readonly>'+esc(JSON.stringify(state))+'</textarea>';
+    b+='<div style="display:flex;gap:10px;"><button class="btn secondary small" data-act="copy-json" style="flex:1;">Salin cadangan</button><button class="btn secondary small" data-act="select-json" style="flex:1;">Pilih semua</button></div>';
+    b+='<div style="height:8px;"></div>';
+    b+=field("Tempel cadangan untuk impor", '<textarea class="input json" id="set-import" placeholder="Tempel data JSON di sini…"></textarea>');
+    b+='<button class="btn secondary" data-act="import-json">Impor &amp; timpa data</button>';
+    b+='</div>';
+
+    b+='<div class="set-group"><div class="section-label">Data contoh</div>';
+    b+='<div class="settings-note">Muat contoh untuk melihat cara kerja aplikasi. Ini akan menimpa data yang ada.</div>';
+    b+='<button class="btn secondary" data-act="load-sample">Muat data contoh</button>';
+    b+='<button class="btn danger" data-act="reset-data">Hapus semua data</button>';
+    b+='</div>';
+
+    b+='<div class="page-sub" style="text-align:center;">Langkah · tetapkan tujuan, bangun sistem, pantau progres.</div>';
+    b+='</div>';
+    openOverlay({ title:"Pengaturan", body:b, close:true });
+  }
+  function copyJson(){
+    var t=document.getElementById("set-json"); if(!t) return;
+    t.removeAttribute("readonly"); t.select(); t.setSelectionRange(0,999999);
+    var ok=false;
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t.value).then(function(){toast("Cadangan disalin");},function(){fallbackCopy(t);}); }
+    else fallbackCopy(t);
+    t.setAttribute("readonly","");
+  }
+  function fallbackCopy(t){ try{ var ok=document.execCommand("copy"); toast(ok?"Cadangan disalin":"Tekan lama untuk menyalin"); }catch(e){ toast("Pilih teks lalu salin manual"); } }
+  function selectJson(){ var t=document.getElementById("set-json"); if(t){ t.removeAttribute("readonly"); t.focus(); t.select(); t.setSelectionRange(0,999999); t.setAttribute("readonly",""); } }
+  function importJson(){
+    var raw=val("set-import").trim();
+    if(!raw){ toast("Tempel data cadangan dulu."); return; }
+    var parsed;
+    try{ parsed=JSON.parse(raw); }catch(e){ toast("Format tidak valid (bukan JSON)."); return; }
+    if(!parsed || typeof parsed!=="object" || !Array.isArray(parsed.goals)){ toast("Data tidak dikenali."); return; }
+    confirmAsk({ title:"Impor cadangan?", msg:"Data saat ini akan ditimpa dengan cadangan ini. Tindakan ini tidak bisa dibatalkan.", ok:"Impor", danger:true }, function(){
+      state=normalize(parsed); save(); closeOverlay(); toast("Data berhasil diimpor"); go("today");
+    });
+  }
+  function loadSample(){
+    confirmAsk({ title:"Muat data contoh?", msg:"Data yang ada sekarang akan diganti dengan data contoh.", ok:"Muat contoh", danger:true }, function(){
+      state=sampleState(); save(); closeOverlay(); toast("Data contoh dimuat"); go("today");
+    });
+  }
+  function resetData(){
+    confirmAsk({ title:"Hapus semua data?", msg:"Semua tujuan, catatan, dan review akan dihapus permanen dari perangkat ini.", ok:"Hapus semua", danger:true }, function(){
+      state=defaultState(); save(); closeOverlay(); toast("Data dihapus"); go("today");
+    });
+  }
+  function sampleState(){
+    var t=todayStr();
+    var s=defaultState();
+    s.identity="Aku membangun kebiasaan bekerja dengan konsisten.";
+    var g1id=uid(), g2id=uid(), sys1=uid(), sys2=uid(), sys3=uid();
+    s.goals=[
+      { id:g1id, createdAt:t, archived:false, completed:false, status:"on_track",
+        name:"Mendapatkan 2 klien dalam 3 bulan", deadline:ymd(addMonths(todayDate(),3)),
+        why:"Supaya bisa transisi penuh jadi freelancer.", obstacle:"Bingung mulai dari mana saat membuka daftar prospek.",
+        ifThen:"Kalau bingung mulai dari mana, aku akan memilih satu prospek dari daftar.",
+        measureType:"number", start:0, current:1, target:2, unit:"klien", milestones:[],
+        systems:[
+          { id:sys1, name:"Menghubungi 5 prospek relevan", days:[1,2,3,4,5], target:5, unit:"prospek" },
+          { id:sys2, name:"Posting 1 portofolio", days:[3], target:null, unit:"" }
+        ]},
+      { id:g2id, createdAt:t, archived:false, completed:false, status:"adjust",
+        name:"Meluncurkan layanan otomasi produktif", deadline:ymd(addMonths(todayDate(),2)),
+        why:"Menawarkan sesuatu yang bisa diproduktisasi.", obstacle:"", ifThen:"",
+        measureType:"milestone", start:null,current:null,target:null,unit:"",
+        milestones:[ {id:uid(),name:"Tentukan paket layanan",done:true},{id:uid(),name:"Buat halaman penawaran",done:false},{id:uid(),name:"Dapatkan 1 uji coba",done:false} ],
+        systems:[ { id:sys3, name:"Riset 1 template workflow", days:[2,4], target:1, unit:"template" } ]}
+    ];
+    // a couple logs this week
+    var ws=startOfWeek(todayDate());
+    var d1=new Date(ws); var d1s=ymd(d1);
+    if(parseYmd(d1s)<=todayDate()) s.logs.push({id:uid(),systemId:sys1,goalId:g1id,date:d1s,count:5,done:true});
+    s.focus=[sys1]; s.focusWeek=weekKey(todayDate());
+    return s;
+  }
+
+  /* ========== Overlay / Sheet / Confirm / Toast ========== */
+  function openOverlay(opt){
+    var head='<div class="ov-head">';
+    if(opt.back) head+='<button class="icon-btn" data-act="close-overlay" aria-label="Kembali">'+IC.back+'</button>';
+    else if(opt.close) head+='<button class="icon-btn" data-act="'+(opt.closeAct||"close-overlay")+'" aria-label="Tutup">'+IC.close+'</button>';
+    else head+='<span style="width:44px;"></span>';
+    head+='<div class="ov-title">'+esc(opt.title)+'</div><span style="width:44px;flex:0 0 auto;"></span></div>';
+    var foot = opt.foot? '<div class="ov-foot"><div class="wrap">'+opt.foot+'</div></div>' : '';
+    overlays.innerHTML='<div class="overlay" id="overlay-main">'+head+'<div class="ov-body"><div class="wrap">'+opt.body+'</div></div>'+foot+'</div>';
+    document.body.style.overflow="hidden";
+  }
+  function closeOverlay(){ overlays.innerHTML=""; document.body.style.overflow=""; draft=null; }
+  function openSheet(opt){
+    var el=document.createElement("div"); el.className="sheet"; el.id="sheet-el";
+    el.innerHTML='<div class="sheet-scrim" data-act="sheet-close"></div><div class="sheet-panel" role="dialog" aria-modal="true"><div class="sheet-head"><h3>'+esc(opt.title)+'</h3><button class="icon-btn" data-act="sheet-close" aria-label="Tutup">'+IC.close+'</button></div><div class="sheet-body">'+opt.body+'</div>'+(opt.foot?'<div class="sheet-foot">'+opt.foot+'</div>':'')+'</div>';
+    document.body.appendChild(el); document.body.style.overflow="hidden";
+  }
+  function closeSheet(){ var el=document.getElementById("sheet-el"); if(el) el.remove(); if(!document.getElementById("overlay-main")) document.body.style.overflow=""; }
+  var confirmCb=null;
+  function confirmAsk(opt, cb){
+    confirmCb=cb;
+    var el=document.createElement("div"); el.className="confirm"; el.id="confirm-el";
+    el.innerHTML='<div class="confirm-scrim" data-act="confirm-cancel"></div><div class="confirm-card" role="alertdialog" aria-modal="true"><h3>'+esc(opt.title)+'</h3><p>'+esc(opt.msg)+'</p><div class="confirm-actions"><button class="btn secondary" data-act="confirm-cancel">Batal</button><button class="btn '+(opt.danger?"danger":"")+'" data-act="confirm-ok">'+esc(opt.ok||"Ya")+'</button></div></div>';
+    document.body.appendChild(el); document.body.style.overflow="hidden";
+  }
+  function confirmClose(run){
+    var el=document.getElementById("confirm-el"); if(el) el.remove();
+    if(!document.getElementById("overlay-main") && !document.getElementById("sheet-el")) document.body.style.overflow="";
+    var cb=confirmCb; confirmCb=null;
+    if(run && cb) cb();
+  }
+  var toastTimer=null;
+  function toast(msg){
+    var root=document.getElementById("toast-root");
+    root.innerHTML='<div class="toast">'+IC.checkSmall+' '+esc(msg)+'</div>';
+    clearTimeout(toastTimer); toastTimer=setTimeout(function(){ root.innerHTML=""; }, 2200);
+  }
+
+  /* ========== Toggle actions (Today) ========== */
+  function toggleDone(sid){
+    var info=systemById(sid); if(!info) return;
+    var ds=todayStr(); var sys=info.sys; var hasTarget=sys.target!=null && sys.target>0;
+    var l=getLog(sid, ds);
+    var done = l? l.done : false;
+    if(done){ upsertLog(sid, info.goal.id, ds, 0, false); }
+    else { upsertLog(sid, info.goal.id, ds, hasTarget? sys.target : 1, true); toast(allTodayDone()?"Langkah hari ini selesai":"Tersimpan"); }
+    render();
+  }
+  function countAdj(sid, delta){
+    var info=systemById(sid); if(!info) return;
+    var ds=todayStr(); var sys=info.sys; var tgt=sys.target||0;
+    var l=getLog(sid, ds); var count=l?l.count:0;
+    count=Math.max(0, Math.min(tgt, count+delta));
+    upsertLog(sid, info.goal.id, ds, count, count>=tgt && tgt>0);
+    render();
+  }
+  function allTodayDone(){ var a=todayActions(); return a.length>0 && a.every(function(x){var l=getLog(x.sys.id,todayStr());return l&&l.done;}); }
+
+  /* ========== Event delegation ========== */
+  document.addEventListener("click", function(e){
+    var t=e.target.closest("[data-act],[data-nav]");
+    if(!t) return;
+    var nav=t.getAttribute("data-nav");
+    if(nav){ if(document.getElementById("overlay-main")) closeOverlay(); go(nav); return; }
+    var act=t.getAttribute("data-act");
+    var sid=t.getAttribute("data-sid");
+    var gid=t.getAttribute("data-gid");
+    switch(act){
+      case "open-settings": openSettings(); break;
+      case "close-overlay": closeOverlay(); break;
+      case "new-goal": if(activeGoals().length>=4){ toast("Maksimal 4 tujuan aktif."); break; } startWizard(null); break;
+      case "expand": ui.expanded[sid]=!ui.expanded[sid]; render(); break;
+      case "toggle-done": toggleDone(sid); break;
+      case "count-inc": countAdj(sid, +1); break;
+      case "count-dec": countAdj(sid, -1); break;
+      case "show-all-today": ui.showAllToday=true; render(); break;
+      case "hide-today": ui.showAllToday=false; render(); break;
+      case "reschedule": openReschedule(sid); break;
+      case "save-reschedule": saveReschedule(sid); break;
+      case "open-goal": openGoal(gid); break;
+      case "update-progress": openUpdateProgress(gid); break;
+      case "save-progress": saveProgress(gid); break;
+      case "edit-goal": startWizard(goalById(gid)); break;
+      case "complete-goal":
+        confirmAsk({title:"Tandai tercapai?",msg:"Tujuan ini akan dipindahkan ke daftar selesai dan tidak lagi menghitung batas 4 tujuan aktif.",ok:"Tandai tercapai"},function(){ var g=goalById(gid); g.completed=true; save(); closeOverlay(); toast("Selamat! Tujuan tercapai."); go("goals"); });
+        break;
+      case "archive-goal":
+        confirmAsk({title:"Arsipkan tujuan?",msg:"Tujuan disimpan tapi tidak aktif. Bisa diaktifkan kembali kapan saja.",ok:"Arsipkan"},function(){ var g=goalById(gid); g.archived=true; save(); closeOverlay(); toast("Tujuan diarsipkan"); go("goals"); });
+        break;
+      case "unarchive-goal":
+        if(activeGoals().length>=4){ toast("Maksimal 4 tujuan aktif."); break; }
+        { var g=goalById(gid); g.archived=false; g.completed=false; save(); closeOverlay(); toast("Tujuan diaktifkan"); go("goals"); }
+        break;
+      case "delete-goal":
+        confirmAsk({title:"Hapus tujuan?",msg:"Tujuan beserta langkah rutinnya akan dihapus permanen. Catatan tindakan terkait juga dibersihkan.",ok:"Hapus",danger:true},function(){
+          state.goals=state.goals.filter(function(x){return x.id!==gid;});
+          var sids=[]; // remove logs of its systems
+          state.logs=state.logs.filter(function(l){return l.goalId!==gid;});
+          state.focus=state.focus.filter(function(f){ return systemById(f); });
+          save(); closeOverlay(); toast("Tujuan dihapus"); go("goals");
+        });
+        break;
+      case "measure": readWizardStep(); draft.measureType=t.getAttribute("data-m"); renderWizard(); break;
+      case "day": {
+        readWizardStep(); var i=+t.getAttribute("data-i"); var d=+t.getAttribute("data-d");
+        var arr=draft.systems[i].days; var idx=arr.indexOf(d);
+        if(idx===-1) arr.push(d); else arr.splice(idx,1);
+        renderWizard(); break;
+      }
+      case "ms-add": readWizardStep(); draft.milestones.push({id:uid(),name:"",done:false}); renderWizard(); break;
+      case "ms-del": { readWizardStep(); var i2=+t.getAttribute("data-i"); draft.milestones.splice(i2,1); if(!draft.milestones.length) draft.milestones.push({id:uid(),name:"",done:false}); renderWizard(); break; }
+      case "sys-add": readWizardStep(); if(draft.systems.length<3){ draft.systems.push({id:uid(),name:"",days:[1,2,3,4,5],target:"",unit:""}); } renderWizard(); break;
+      case "sys-del": { readWizardStep(); var i3=+t.getAttribute("data-i"); draft.systems.splice(i3,1); renderWizard(); break; }
+      case "wiz-next": wizNext(); break;
+      case "wiz-back": wizBack(); break;
+      case "wiz-save": wizSave(); break;
+      case "wiz-cancel":
+        readWizardStep();
+        var dirty = draft && (draft.name || (draft.systems&&draft.systems.some(function(s){return s.name;})));
+        if(dirty && !draft.id){ confirmAsk({title:"Batalkan?",msg:"Tujuan yang belum disimpan akan hilang.",ok:"Batalkan",danger:true},function(){ closeOverlay(); }); }
+        else closeOverlay();
+        break;
+      case "edit-identity": openIdentity(); break;
+      case "save-identity": saveIdentity(); break;
+      case "save-review": saveReview(); break;
+      case "sheet-close": closeSheet(); break;
+      case "copy-json": copyJson(); break;
+      case "select-json": selectJson(); break;
+      case "import-json": importJson(); break;
+      case "load-sample": loadSample(); break;
+      case "reset-data": resetData(); break;
+      case "confirm-ok": confirmClose(true); break;
+      case "confirm-cancel": confirmClose(false); break;
+    }
+  });
+
+  // keyboard: open goal card via Enter/Space
+  document.addEventListener("keydown", function(e){
+    if((e.key==="Enter"||e.key===" ") && document.activeElement){
+      var el=document.activeElement.closest('[data-act="open-goal"]');
+      if(el){ e.preventDefault(); openGoal(el.getAttribute("data-gid")); }
+    }
+  });
+  // priority limit on change
+  document.addEventListener("change", function(e){ if(e.target && e.target.hasAttribute && e.target.hasAttribute("data-prio")) enforcePrioLimit(); });
+
+  /* ========== Boot ========== */
+  state=load();
+  render();
+})();
+</script>
+
+</body>
+</html>
